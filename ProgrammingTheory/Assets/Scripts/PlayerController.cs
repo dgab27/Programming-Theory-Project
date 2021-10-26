@@ -16,9 +16,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      float horizontalInput = Input.GetAxis("Horizontal");
-      playerRB.AddForce(Vector3.right * speed * horizontalInput * Time.deltaTime);
-
+        HandleMovement();
+    }
+    
+    //Abstracting the movement ABSTRACTIOn
+    void HandleMovement()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        playerRB.AddForce(Vector3.right * speed * horizontalInput * Time.deltaTime);
     }
 
 }

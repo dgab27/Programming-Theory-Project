@@ -6,9 +6,11 @@ using TMPro;
 
 public class Shape : MonoBehaviour
 {
+    public TextMeshProUGUI textToDisplay;
     private string shapeName = "Shape";
-
-    public string Name
+    
+    //Example of ENCAPSULATION
+    public string ShapeName
     {
         get
         {
@@ -16,12 +18,13 @@ public class Shape : MonoBehaviour
         }
         set
         {
-            name = value;
+            shapeName = value;
         }
     }
 
     int scoreToGive = 5;
 
+    //Example of ENCAPSULATION
     public int ScoreToGive
     {
         get
@@ -33,8 +36,11 @@ public class Shape : MonoBehaviour
             scoreToGive = value;
         }
     }
-    public TextMeshProUGUI textToDisplay;
-    
+
+    private void Awake()
+    {
+        textToDisplay = GameObject.Find("GameLog").GetComponent<TextMeshProUGUI>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -53,16 +59,22 @@ public class Shape : MonoBehaviour
         {
             Destroy(gameObject);
             DisplayText();
+            BumpScore();
         }
         else if (collision.gameObject.tag == "Ground")
         {
             Destroy(gameObject);
         }
     }
-
-    private void DisplayText()
+    //ABSTRACTION
+    public virtual void DisplayText()
     {
         textToDisplay.text = "Player caught: " + shapeName + " and received " + scoreToGive + " score";
     }
 
+    //ABSTRACTION
+    private void BumpScore()
+    {
+        GameManager.instance.IncreaseScore(scoreToGive);
+    }
 }
